@@ -1,5 +1,5 @@
 
-public class RecordList implements Comparable<RecordList> {
+public class RecordList implements Comparable<Integer> {
     public Node head;
     public int key;
 
@@ -14,10 +14,10 @@ public class RecordList implements Comparable<RecordList> {
     }
 
     @Override
-    public int compareTo(RecordList list2) {
-        if(this.key> list2.key)
+    public int compareTo(Integer newKey) {
+        if(this.key> newKey)
             return 1;
-        else if (this.key< list2.key) {
+        else if (this.key< newKey) {
             return -1;
         }
         return 0;
