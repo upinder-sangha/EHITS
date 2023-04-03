@@ -1,4 +1,3 @@
-import javax.swing.tree.TreeNode;
 
 public class AVLTree {
     
@@ -62,7 +61,27 @@ public class AVLTree {
         }
 
         public void insert(int key, String value) {
-            root = insert(root, key, value);
+
+            if(!insertIfEqualKeys(root, key,value)) {
+                root = insert(root, key, value);
+            }
+        }
+
+        private boolean insertIfEqualKeys(TreeNode node, int key, String value){
+        if(node == null)
+            return false;
+        else if (node.compareTo(key)==0) {
+            node.list.addToStart(value);
+            return true;
+        }
+        else {
+            if (node.compareTo(key) > 0) {
+                return insertIfEqualKeys(node.left, key, value);
+            } else if(node.compareTo(key)<0) {
+                return insertIfEqualKeys(node.right, key, value);
+            }
+        }
+            return false;
         }
 
         private TreeNode insert(TreeNode node, int key, String value) {
@@ -75,6 +94,7 @@ public class AVLTree {
             } else {
                 node.right = insert(node.right, key, value);
             }
+
 
             updateHeight(node);                 // Updates the height of root of subtree after inserting new node
 
@@ -115,11 +135,11 @@ public class AVLTree {
         StringBuilder sb = new StringBuilder();
         if (node != null) {
             sb.append(prefix);
-            sb.append(node.list.key);
+            sb.append(node.list);
             sb.append("\n");
             if (node.left != null && node.right != null) {
-                sb.append(toString(node.left, childrenPrefix + "├── ", childrenPrefix + "│   "));
-                sb.append(toString(node.right, childrenPrefix + "└── ", childrenPrefix + "    "));
+                sb.append(toString(node.right, childrenPrefix + "├── ", childrenPrefix + "│   "));
+                sb.append(toString(node.left, childrenPrefix + "└── ", childrenPrefix + "    "));
             } else if (node.left != null) {
                 sb.append(toString(node.left, childrenPrefix + "└── ", childrenPrefix + "    "));
             } else if (node.right != null) {

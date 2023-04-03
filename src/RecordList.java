@@ -36,22 +36,21 @@ public class RecordList implements Comparable<Integer> {
 //        }
 //    }
 
-    public void print(){
+    public String toString(){
         Node temp = head;
-        if(head == null)
-            System.out.println("Empty");
-        else {
-            while (temp != null) {
-                System.out.print(temp.value+" ");
-                temp = temp.next;
-            }
-        }
-        System.out.println();
-    }
+        StringBuffer sb = new StringBuffer(key+" (");
 
-//    public Node createNode(int value, Node next){
-//        return new Node(value,next);
-//    }
+        while (temp != null) {
+            sb.append(temp.value+", ");
+            temp = temp.next;
+        }
+
+        String str = sb.toString();
+        str = str.substring(0,(str.length()-2));
+        str+=")";
+
+        return str;
+    }
 
 
     class Node{
