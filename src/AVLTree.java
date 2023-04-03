@@ -111,11 +111,11 @@ public class AVLTree {
         return toString(root, "", "");
     }
 
-    private String toString(Node node, String prefix, String childrenPrefix) {
+    private String toString(TreeNode node, String prefix, String childrenPrefix) {
         StringBuilder sb = new StringBuilder();
         if (node != null) {
             sb.append(prefix);
-            sb.append(node.key);
+            sb.append(node.list.key);
             sb.append("\n");
             if (node.left != null && node.right != null) {
                 sb.append(toString(node.left, childrenPrefix + "├── ", childrenPrefix + "│   "));
