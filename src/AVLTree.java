@@ -17,7 +17,7 @@ public class AVLTree {
             this.height = 1;
         }
 
-        public void addToStart(String value){
+        private void addToStart(String value){
             list.addToStart(value);
         }
 
@@ -71,7 +71,7 @@ public class AVLTree {
         if(node == null)
             return false;
         else if (node.compareTo(key)==0) {
-            node.list.addToStart(value);
+            node.addToStart(value);
             return true;
         }
         else {
