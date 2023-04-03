@@ -106,7 +106,28 @@ public class AVLTree {
 
             inorder(node.right);
         }
+    @Override
+    public String toString() {
+        return toString(root, "", "");
+    }
 
+    private String toString(Node node, String prefix, String childrenPrefix) {
+        StringBuilder sb = new StringBuilder();
+        if (node != null) {
+            sb.append(prefix);
+            sb.append(node.key);
+            sb.append("\n");
+            if (node.left != null && node.right != null) {
+                sb.append(toString(node.left, childrenPrefix + "├── ", childrenPrefix + "│   "));
+                sb.append(toString(node.right, childrenPrefix + "└── ", childrenPrefix + "    "));
+            } else if (node.left != null) {
+                sb.append(toString(node.left, childrenPrefix + "└── ", childrenPrefix + "    "));
+            } else if (node.right != null) {
+                sb.append(toString(node.right, childrenPrefix + "└── ", childrenPrefix + "    "));
+            }
+        }
+        return sb.toString();
+    }
 
 
 
