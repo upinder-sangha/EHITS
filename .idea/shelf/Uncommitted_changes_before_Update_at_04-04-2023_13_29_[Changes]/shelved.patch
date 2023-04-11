@@ -1,0 +1,37 @@
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class Main {\r\n    public static void main(String[] args) {\r\n        AVLTree newTree = new AVLTree();\r\n        newTree.insert(1,\"a\");\r\n        newTree.insert(2,\"b\");\r\n        newTree.insert(3,\"c\");\r\n        newTree.insert(4,\"d\");\r\n        newTree.insert(5,\"e\");\r\n        newTree.insert(5,\"f\");\r\n        newTree.insert(6,\"g\");\r\n        newTree.insert(7,\"h\");\r\n        newTree.insert(8,\"i\");\r\n        newTree.insert(9,\"j\");\r\n//        newTree.inorder();\r\n        System.out.println(newTree);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+--- a/src/Main.java	(revision 02a8af1b7e6a7edbb882eda0cab670030a761ec7)
++++ b/src/Main.java	(date 1680629381430)
+@@ -1,5 +1,11 @@
++import java.io.FileInputStream;
++import java.io.FileNotFoundException;
++import java.util.Scanner;
++
+ public class Main {
+     public static void main(String[] args) {
++
++        int[] ids= readIdsFromFile("asldjf");
+         AVLTree newTree = new AVLTree();
+         newTree.insert(1,"a");
+         newTree.insert(2,"b");
+@@ -14,4 +20,13 @@
+ //        newTree.inorder();
+         System.out.println(newTree);
+     }
++
++    public static int[] readIdsFromFile(String fileName) throws FileNotFoundException {
++        FileInputStream fis = new FileInputStream(fileName);
++        Scanner sc = new Scanner(fis);
++
++        while (sc.hasNextLine()){
++
++        }
++    }
+ }
+\ No newline at end of file

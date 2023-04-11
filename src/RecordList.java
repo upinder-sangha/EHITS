@@ -23,19 +23,6 @@ public class RecordList implements Comparable<Integer> {
         return 0;
     }
 
-    //    public void addToEnd(int value){
-//        if(head == null)
-//            addToStart(value);
-//        else {
-//            Node temp = head;
-//            while (temp.next != null)
-//                temp = temp.next;
-//
-//            Node newNode = new Node(value, null);
-//            temp.next = newNode;
-//        }
-//    }
-
     public String toString(){
         Node temp = head;
         StringBuffer sb = new StringBuffer(key+" (");
