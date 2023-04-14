@@ -1,4 +1,5 @@
 public interface SortedCollection {
+    int getCurrentNoOfElements();
     int generate();
     int[] allKeys();
     void add(int key, String value);
@@ -7,4 +8,6 @@ public interface SortedCollection {
     int nextKey(int key);
     int prevKey(int key);
     int rangeKey(int key1, int key2);
+
+    RecordList[] getElements();
 }

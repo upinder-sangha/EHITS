@@ -4,7 +4,7 @@ public class SortedArray implements SortedCollection {
 
     public RecordList[] sortedArray;
     private int maxCapacity;
-    private int currentNoOfElements;
+    protected int currentNoOfElements;
 
     public SortedArray(int maxCapacity) {
         this.maxCapacity = maxCapacity;
@@ -44,13 +44,7 @@ public class SortedArray implements SortedCollection {
     @Override
     public int generate() {
         Random random = new Random();
-        int key;
-
-        do {
-            key = 10000000 + random.nextInt(90000000);
-        } while (getValues(key)!=null);
-
-        return key;
+        return 10000000 + random.nextInt(90000000);
     }
 
     @Override
@@ -64,6 +58,27 @@ public class SortedArray implements SortedCollection {
 
     @Override
     public void remove(int key) {
+        int low = 0;
+        int high = currentNoOfElements-1;
+        int index = -1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (sortedArray[mid].compareTo(key)==0) {
+                index = mid;
+                break;
+            } else if (sortedArray[mid].compareTo(key)<0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        if(index>=0){
+            for (int i = index; i < currentNoOfElements-1; i++) {
+                sortedArray[i]=sortedArray[i+1];
+            }
+            sortedArray[currentNoOfElements-1] = null;
+            currentNoOfElements--;
+        }
 
     }
 
@@ -138,6 +153,21 @@ public class SortedArray implements SortedCollection {
         }
         maxCapacity = newArray.length;
         return newArray;
+    }
+
+
+    @Override
+    public int getCurrentNoOfElements() {
+        return currentNoOfElements;
+    }
+
+    @Override
+    public RecordList[] getElements(){
+        RecordList[] elements = new RecordList[currentNoOfElements];
+        for (int i = 0; i < currentNoOfElements; i++) {
+            elements[i] = sortedArray[i];
+        }
+        return elements;
     }
 
     public String toString() {

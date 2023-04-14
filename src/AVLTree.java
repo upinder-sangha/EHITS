@@ -4,7 +4,7 @@ import java.util.Random;
 public class AVLTree implements SortedCollection{
 
     private TreeNode root;
-    private int currentNoOfElements;
+    protected int currentNoOfElements;
 
     public AVLTree(){
         root = null;
@@ -22,12 +22,7 @@ public class AVLTree implements SortedCollection{
     @Override
     public int generate() {
         Random random = new Random();
-        int key;
-        do {
-            key = 10000000 + random.nextInt(90000000);
-        } while (getValues(key)!=null);
-
-        return key;
+        return 10000000 + random.nextInt(90000000);
     }
 
     @Override
@@ -48,8 +43,81 @@ public class AVLTree implements SortedCollection{
 
     @Override
     public void remove(int key) {
-
+    root = deleteNode(root,key);
+    currentNoOfElements --;
     }
+
+    // Function to delete a node with a given key from an AVL tree
+    public TreeNode deleteNode(TreeNode root, int key) {
+        // Base case: empty tree
+        if (root == null) {
+            return root;
+        }
+
+        // If the key to be deleted is smaller than the root's key,
+        // then it lies in the left subtree
+        if (root.compareTo(key)>0) {
+            root.left = deleteNode(root.left, key);
+        }
+        // If the key to be deleted is greater than the root's key,
+        // then it lies in the right subtree
+        else if (root.compareTo(key)<0) {
+            root.right = deleteNode(root.right, key);
+        }
+        // If key is same as root's key, then this is the node
+        // to be deleted
+        else {
+            // Case 1: node with only one child or no child
+            if (root.left == null || root.right == null) {
+                TreeNode temp;
+                if (root.left != null) {
+                    temp = root.left;
+                } else {
+                    temp = root.right;
+                }
+                // No child case
+                if (temp == null) {
+                    temp = root;
+                    root = null;
+                } else { // One child case
+                    root = temp; // Copy the contents of the non-empty child
+                }
+            } else { // Case 2: node with two children
+                // Get the inorder successor (smallest in the right subtree)
+                TreeNode temp = minValue(root.right);
+                // Copy the inorder successor's data to this node
+                root.list = temp.list;
+                // Delete the inorder successor
+                root.right = deleteNode(root.right, temp.list.key);
+            }
+        }
+
+        // If the tree had only one node then return
+        if (root == null) {
+            return root;
+        }
+
+        // Update the height of the current node
+        updateHeight(root);
+
+        // Get the balance factor of this node
+        int balance = balanceFactor(root);
+
+        if (balance > 1) {
+            if (balanceFactor(root.left) < 0) {
+                root.left = rotateLeft(root.left);
+            }
+            return rotateRight(root);
+        } else if (balance < -1) {
+            if (balanceFactor(root.right) > 0) {
+                root.right = rotateRight(root.right);
+            }
+            return rotateLeft(root);
+        }
+
+        return root;
+    }
+
 
     @Override
     public String getValues(int key) {
@@ -266,6 +334,11 @@ public class AVLTree implements SortedCollection{
         return node;
     }
 
+    @Override
+    public int getCurrentNoOfElements() {
+        return currentNoOfElements;
+    }
+
     public void inorder() {
         inorder(root);
     }
@@ -276,6 +349,20 @@ public class AVLTree implements SortedCollection{
         System.out.print(node.list.key + " ");
 
         inorder(node.right);
+    }
+
+    public RecordList[] getElements(){
+        RecordList[] elements = new RecordList[currentNoOfElements];
+        inOrder(root,elements,0);
+        return elements;
+    }
+    private int inOrder(TreeNode node, RecordList[] elements, int index){
+        if (node != null) {
+            index = inOrder(node.left, elements, index);
+            elements[index++] = node.list;
+            index = inOrder(node.right, elements, index);
+        }
+        return index;
     }
 
     @Override
