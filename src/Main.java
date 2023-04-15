@@ -1,3 +1,11 @@
+//COMP6481 – Winter 2023
+//Programming and Problem Solving
+//Assignment # 3 ------- Part 2
+//Submitted by:
+//Upinder Singh Sangha (40224932)
+//Karandeep Singh (40197407)
+
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -40,9 +48,15 @@ public class Main {
 //        Testing duplicate entries
         System.out.println("What if we have a duplicate key? (Try adding it)");
         int duplicateKey = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter the new value: ");
         String newValue = sc.nextLine();
         elasticERL.add(duplicateKey,newValue);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Value of the new key is: ");
         System.out.println(elasticERL.getValues(duplicateKey));
 
